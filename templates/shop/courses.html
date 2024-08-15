@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}All Courses{% endblock %}
+
+{% block content %}
+<table class="table mt-5 table-striped table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Students Quantity</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for course in courses %}
+        <tr>
+            <td>
+                <a href="{% url "shop:single_course" course.id %}">{{ course.title }}</a>
+            </td>
+            <td>{{ course.category }}</td>
+            <td>{{ course.price }}</td>
+            <td>{{ course.students_qty}}</td>
+            {% if course.is_basket_item %}
+            <td><button class="btn btn-secondary">Already in basket</button></td>
+            {% else %}
+            {% if user.is_authenticated %}
+            <td><a class="btn btn-success" href="{% url 'shop:add_to_basket' course.id%}">Add to basket</a></td>
+            {% else %}
+            <td><a class="btn btn-success" href="{% url 'login'%}">Add to basket</a></td>
+            {% endif %}
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

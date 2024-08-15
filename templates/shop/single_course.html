@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ course.title}}{% endblock %}
+
+{% block content %}
+<div class="card text-center mt-5">
+    <div class="card-header">
+      {{ course.title }}
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{ course.category }}</h5>
+      <p class="card-text">Price: {{ course.price }}$</p>
+      <p class="card-text">Students Quantity: {{ course.students_qty }}</p>
+      {% if course.is_basket_item %}
+      <button class="btn btn-secondary">Already in basket</button>
+      {% else %}
+      {% if user.is_authenticated %}
+      <a class="btn btn-success" href="{% url 'shop:add_to_basket' course.id%}">Add to basket</a>
+      {% else %}
+      <a class="btn btn-success" href="{% url 'login'%}">Add to basket</a>
+      {% endif %}
+      {% endif %}
+    </div>
+    <div class="card-footer text-body-secondary">
+      {{ course.created_at }}
+    </div>
+  </div>
+{% endblock %}

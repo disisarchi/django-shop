@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Personal{% endblock %}
+
+{% block content %}
+
+
+
+{% for item in basket_items %} 
+<div class="card text-center mt-5">
+    <div class="card-header">
+      {{ item.course.title }}
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{ item.course.category }}</h5>
+      <p class="card-text">Price: {{ item.course.price }}$</p>
+    </div>
+    <div class="card-footer text-body-secondary">
+      <a class="btn btn-danger" href="{% url 'shop:remove_from_basket' item.id%}">Remove</a>
+    </div>
+    {% empty %}
+    <p class='text-center h2 mt-5'>Your basket is empty.</p>
+</div>
+
+{% endfor %}
+
+<p class='text-center h3 mt-5'>Total Price: ${{ total_price }}</p>
+
+
+{% endblock %}
